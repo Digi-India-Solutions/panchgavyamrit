@@ -107,7 +107,7 @@ exports.checkout = async (req, res) => {
     // Fetch shipping charge based on pincode
     if (pincode) {
         try {
-            const response = await axios.get("http://localhost:8000/api/all-pincode");
+            const response = await axios.get("https://api.panchgavyamrit.com/api/all-pincode");
             const pinCodeData = response.data.find(item => item.pincode === parseInt(pincode));
             if (pinCodeData) {
                 shippingCost = pinCodeData.shippingCharge;
