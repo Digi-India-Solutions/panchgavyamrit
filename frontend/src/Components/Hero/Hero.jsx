@@ -382,20 +382,20 @@ const Hero = () => {
                         </option>
                       ))}
                     </select>
-                    {/* <div className="" style={{display:'flex',justifyContent:'space-between' , gap:5}}> */}
-                    {/* <button
+                    <div className="" style={{display:'flex',justifyContent:'space-between' , gap:5}}>
+                    <button
                         onClick={() => handleViewDetails(product._id)}
                         className="add-to-cart"
                       >
                         ADD TO CART
-                      </button> */}
+                      </button>
                     <button
                       onClick={() => handleViewDetails(product._id)}
                       className="add-to-cart"
                     >
                       View Details <i class="bi bi-chevron-double-right"></i>
                     </button>
-                    {/* </div> */}
+                    </div>
                   </div>
                 </div>
               ))}

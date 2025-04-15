@@ -212,7 +212,13 @@ const Products = () => {
                           </option>
                         ))}
                       </select>
-
+                      <div className="" style={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}>
+                        <button
+                          onClick={() => handleViewDetails(product._id)}
+                          className="add-to-cart"
+                        >
+                          ADD TO CART
+                        </button>
                       <button
                         onClick={() => handleViewDetails(product._id)}
                         className="add-to-cart"
@@ -220,6 +226,7 @@ const Products = () => {
                         View Details
                       </button>
                     </div>
+                  </div>
                   </div>
                 ))}
               </div>
