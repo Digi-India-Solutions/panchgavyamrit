@@ -107,6 +107,55 @@ const Products = () => {
     );
   };
 
+
+  // add by aman 
+
+const addToCart = (product) => {
+    if (!product) return;
+  
+    const quantity = 1; // or get from state/input
+    const selectedWeight = "500g"; // or get from state/input
+    const price = product.price; // or calculate based on selectedWeight
+  
+    if (quantity < 1) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select at least one item.',
+      });
+      return;
+    }
+  
+    const existingCart = JSON.parse(sessionStorage.getItem("VesLakshna")) || [];
+    const isProductInCart = existingCart.some((item) => item.productId === product._id);
+  
+    if (isProductInCart) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Product Already in Cart',
+        text: 'This product is already in your cart.',
+      });
+    } else {
+      const cartProduct = {
+        productId: product._id,
+        productName: product.productName,
+        productImage: product.productImage[0],
+        price: price,
+        weight: selectedWeight,
+        quantity: quantity,
+      };
+      existingCart.push(cartProduct);
+      sessionStorage.setItem("VesLakshna", JSON.stringify(existingCart));
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Cart',
+        text: `${product.productName} has been added to your cart.`,
+      });
+      navigate("/cart");
+    }
+  };
+
+
   return (
     <>
       <Helmet>
@@ -214,7 +263,7 @@ const Products = () => {
                       </select>
                       <div className="" style={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}>
                         <button
-                          onClick={() => handleViewDetails(product._id)}
+                           onClick={() => addToCart(product)}
                           className="add-to-cart"
                         >
                           ADD TO CART

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import bannerImage1 from "../../images/banner1.jpg";
+// import bannerImage1 from "../../images/banner1.jpg";
 import "./hero.css";
 import Slider from "react-slick";
 import grocery from "../../images/grocery.png";
 import CountUp from "react-countup";
-import article1 from "../../images/articleimg1.jpg";
-import article2 from "../../images/articleimg2.jpg";
-import article3 from "../../images/articleimg3.jpg";
-import article4 from "../../images/articleimg4.jpg";
+// import article1 from "../../images/articleimg1.jpg";
+// import article2 from "../../images/articleimg2.jpg";
+// import article3 from "../../images/articleimg3.jpg";
+// import article4 from "../../images/articleimg4.jpg";
 import ProductsTabs from "../ProductsTabs/ProductsTabs";
 import SubscribeForm from "../SubscribeForm/SubscribeForm";
 import { Link, useNavigate } from "react-router-dom";
@@ -190,6 +190,55 @@ const Hero = () => {
     getArticalsData()
   }, [])
 
+
+// add by aman tiwari
+
+  const addToCart = (product) => {
+    if (!product) return;
+  
+    const quantity = 1; // or get from state/input
+    const selectedWeight = "500g"; // or get from state/input
+    const price = product.price; // or calculate based on selectedWeight
+  
+    if (quantity < 1) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select at least one item.',
+      });
+      return;
+    }
+  
+    const existingCart = JSON.parse(sessionStorage.getItem("VesLakshna")) || [];
+    const isProductInCart = existingCart.some((item) => item.productId === product._id);
+  
+    if (isProductInCart) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Product Already in Cart',
+        text: 'This product is already in your cart.',
+      });
+    } else {
+      const cartProduct = {
+        productId: product._id,
+        productName: product.productName,
+        productImage: product.productImage[0],
+        price: price,
+        weight: selectedWeight,
+        quantity: quantity,
+      };
+      existingCart.push(cartProduct);
+      sessionStorage.setItem("VesLakshna", JSON.stringify(existingCart));
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Cart',
+        text: `${product.productName} has been added to your cart.`,
+      });
+      navigate("/cart");
+    }
+  };
+  
+
   return (
     <>
       <section className="sidebutton">
@@ -232,7 +281,7 @@ const Hero = () => {
               ) : (
                 <div className="carousel-item active">
                   <img
-                    src={bannerImage1} // Fallback to a default image
+                    // src={bannerImage1} // Fallback to a default image
                     className="d-block w-100"
                     alt="Default Banner"
                   />
@@ -384,13 +433,13 @@ const Hero = () => {
                     </select>
                     <div className="" style={{display:'flex',justifyContent:'space-between' , gap:5}}>
                     <button
-                        onClick={() => handleViewDetails(product._id)}
+                        onClick={() => addToCart(product)}
                         className="add-to-cart"
                       >
                         ADD TO CART
                       </button>
                     <button
-                      onClick={() => handleViewDetails(product._id)}
+                     onClick={() => addToCart(product)}
                       className="add-to-cart"
                     >
                       View Details <i class="bi bi-chevron-double-right"></i>

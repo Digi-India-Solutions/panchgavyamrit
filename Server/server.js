@@ -31,9 +31,10 @@ const allowedOrigins = [
     'https://panchgavyamrit.com',
     'https://www.panchgavyamrit.com',
     'https://admin.panchgavyamrit.com',
+    'https://api.panchgavyamrit.com',
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://localhost:3002'  
+    'http://localhost:3002',  
 ];
 
 // CORS configuration

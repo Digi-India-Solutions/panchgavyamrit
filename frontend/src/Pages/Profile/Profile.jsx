@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./profile.css";
-import image from "../../images/footer1.jpg";
+// import image from "../../images/footer1.jpg";
 import axios from "axios";
 const Profile = () => {
   const [data, setData] = useState({});

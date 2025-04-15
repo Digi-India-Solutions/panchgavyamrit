@@ -182,7 +182,12 @@ const Header = ({refs, setRef}) => {
                 <Link className="d-md-none toggleButton position-relative" to={"/cart"}>
                   <i className="bi bi-cart"></i>
                   {cartLength > 0 && (
-                    <span className="cartLength position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-dark">
+                    <span className="absolute top-0 start-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-teal-300 to-indigo-400 text-black text-xs px-2 py-1 shadow-md" style={{
+                      background: 'linear-gradient(to bottom right,#f58634,rgb(235, 107, 15))', // Gradient from teal to indigo
+                      color: 'white',
+                      borderRadius:"33px",
+                      fontSize:"12px"
+                    }}>
                       {cartLength}
                     </span>
                   )}
@@ -219,7 +224,7 @@ const Header = ({refs, setRef}) => {
                 >
                   <i className="bi bi-cart"></i>
                   {cartLength > 0 && (
-                    <span className="cartLength position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-dark">
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-white font-bold text-2xl px-9 py-6" style={{backgroundColor:"#f58634", fontSize:"14px"}}>
                       {cartLength}
                     </span>
                   )}
