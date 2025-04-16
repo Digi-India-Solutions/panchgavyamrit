@@ -58,7 +58,7 @@ const getOrderEmailTemplate = (checkout) => {
                 </div>
                 <div class="section">
                     <h3>Order Information:</h3>
-                    <p><strong>Order ID:</strong> ${checkout._id}</p>
+                    <p><strong>Order ID:</strong> ${checkout.orderUniqueId}</p>
                     // <p><strong>User ID:</strong> ${checkout.userId}</p>
                     <p><strong>User Name:</strong> ${checkout.shippingAddress.name}</p>
                     <p><strong>User Email:</strong> ${checkout.shippingAddress.email}</p>
