@@ -52,17 +52,17 @@ const Checkout = () => {
     calculateCartSummary(savedCartItems);
   }, []);
 
-
+  console.log("userDatauserDatauserDatauserDatauserData", userData)
 
   const [shippingAddress, setShippingAddress] = useState({
-    name: userData.name,
-    email: userData.email,
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    postalCode: ""
+    name: userData?.name,
+    email: userData?.email,
+    phone: userData?.phone || "",
+    address: userData?.address || "",
+    city: userData?.city || "",
+    state: userData?.state || "",
+    country: userData?.country || "",
+    postalCode: userData?.postalCode || ""
   });
 
   useEffect(() => {
@@ -71,6 +71,12 @@ const Checkout = () => {
         ...prevState,
         name: userData.name,
         email: userData.email,
+        phone: userData?.phone || "",
+        address: userData?.address || "",
+        city: userData?.city || "",
+        state: userData?.state || "",
+        country: userData?.country || "",
+        postalCode: userData?.postalCode || ""
       }));
     }
   }, [userData]);
@@ -168,7 +174,7 @@ const Checkout = () => {
       [name]: value,
     }));
   };
-
+  // console.log("XXXXXXXXXXXXXXXXXXXXX:-XXXX-:=",shippingAddress)
 
   const handleConfirmOrder = async (event) => {
     event.preventDefault();

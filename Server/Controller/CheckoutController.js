@@ -6,6 +6,7 @@ const CupanCode = require("../Models/VouchersModel");
 const { transporter } = require("../utils/Nodemailer");
 const ShortUniqueId = require("short-unique-id");
 const { getYear } = require("date-fns");
+const User = require("../Models/UserModel");
 
 const razorpayInstance = new Razorpay({
     key_id: 'rzp_live_FjN3xa6p5RsEl6',
@@ -103,6 +104,33 @@ exports.checkout = async (req, res) => {
     let shippingCost = 200;
     let discountAmount = 0;
     let discountCupan = 0;
+  
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                $set: {
+                    address: shippingAddress.address,
+                    phone: shippingAddress.phone,
+                    city: shippingAddress.city,
+                    state: shippingAddress.state,
+                    postalCode: shippingAddress.postalCode,
+                    country: shippingAddress.country || "",
+                },
+            },
+            { new: true }
+        );
+        console.log("response:====:", updatedUser, "SSSSSSSSS:-", userId, shippingAddress);
+    
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).json({ error: "Failed to update user info" });
+    }
+
+    
 
     // Fetch shipping charge based on pincode
     if (pincode) {
@@ -116,7 +144,12 @@ exports.checkout = async (req, res) => {
             console.error("Error fetching shipping charge:", error);
         }
     }
+
+
+
+
     // Validate coupon and calculate discount
+
     if (cupanCode) {
         try {
             const coupon = await validateCoupon(cupanCode);
