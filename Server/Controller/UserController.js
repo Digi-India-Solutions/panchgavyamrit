@@ -64,6 +64,7 @@ const createRecord = async (req, res) => {
         res.status(500).json({ success: false, message: "Error creating user or sending email." });
     }
 }
+
 const getRecords = async (req, res) => {
     try {
         const users = await User.find(); // Fetch all users
