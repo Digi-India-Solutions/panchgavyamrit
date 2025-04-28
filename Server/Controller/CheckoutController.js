@@ -6,6 +6,7 @@ const CupanCode = require("../Models/VouchersModel");
 const { transporter } = require("../utils/Nodemailer");
 const ShortUniqueId = require("short-unique-id");
 const { getYear } = require("date-fns");
+const User = require("../Models/UserModel");
 
 const razorpayInstance = new Razorpay({
     key_id: 'rzp_live_FjN3xa6p5RsEl6',
@@ -57,8 +58,12 @@ const getOrderEmailTemplate = (checkout) => {
                 </div>
                 <div class="section">
                     <h3>Order Information:</h3>
-                    <p><strong>Order ID:</strong> ${checkout._id}</p>
-                    <p><strong>User:</strong> ${checkout.userId}</p>
+                    <p><strong>Order ID:</strong> ${checkout.orderUniqueId}</p>
+                    // <p><strong>User ID:</strong> ${checkout.userId}</p>
+                    <p><strong>User Name:</strong> ${checkout.shippingAddress.name}</p>
+                    <p><strong>User Email:</strong> ${checkout.shippingAddress.email}</p>
+                    <p><strong>User Phone:</strong> ${checkout.shippingAddress.phone}</p>
+
                     <p><strong>Shipping Address:</strong> ${checkout.shippingAddress.address}, ${checkout.shippingAddress.city}, ${checkout.shippingAddress.state}, ${checkout.shippingAddress.postalCode}</p>
                     <p><strong>Payment Method:</strong> ${checkout.paymentMethod}</p>
                 </div>
@@ -104,6 +109,33 @@ exports.checkout = async (req, res) => {
     let discountAmount = 0;
     let discountCupan = 0;
 
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                $set: {
+                    address: shippingAddress.address,
+                    phone: shippingAddress.phone,
+                    city: shippingAddress.city,
+                    state: shippingAddress.state,
+                    postalCode: shippingAddress.postalCode,
+                    country: shippingAddress.country || "",
+                },
+            },
+            { new: true }
+        );
+        console.log("response:====:", updatedUser, "SSSSSSSSS:-", userId, shippingAddress);
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).json({ error: "Failed to update user info" });
+    }
+
+
+
     // Fetch shipping charge based on pincode
     if (pincode) {
         try {
@@ -116,7 +148,12 @@ exports.checkout = async (req, res) => {
             console.error("Error fetching shipping charge:", error);
         }
     }
+
+
+
+
     // Validate coupon and calculate discount
+
     if (cupanCode) {
         try {
             const coupon = await validateCoupon(cupanCode);
@@ -187,6 +224,7 @@ exports.checkout = async (req, res) => {
             await checkout.save();
 
             // Send welcome email
+            console.log("getOrderEmailTemplate:==", checkout)
             await transporter.sendMail({
                 from: "Panchgavya.amrit@gmail.com",
                 to: "Panchgavya.amrit@gmail.com",

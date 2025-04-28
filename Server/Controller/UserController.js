@@ -64,12 +64,14 @@ const createRecord = async (req, res) => {
         res.status(500).json({ success: false, message: "Error creating user or sending email." });
     }
 }
+
 const getRecords = async (req, res) => {
     try {
         const users = await User.find(); // Fetch all users
+        const filterUser = users.filter((user) => user.role === "User")
         res.status(200).json({
             success: true,
-            data: users,
+            data: filterUser,
         });
     } catch (error) {
         console.error(error);

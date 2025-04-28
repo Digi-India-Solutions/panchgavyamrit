@@ -4,7 +4,7 @@ const { protectAdmin } = require("../Middlewares/Authorization")
 const UserRouter = require("express").Router()
 
 UserRouter.post("/signup", createRecord)
-UserRouter.get("/all-users", protectAdmin, getRecords)
+UserRouter.get("/all-users",  getRecords)
 UserRouter.get("/get-user/:id", getSingleRecords)
 UserRouter.delete("/delete-user/:id", deleteRecord)
 

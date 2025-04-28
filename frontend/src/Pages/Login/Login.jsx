@@ -119,6 +119,11 @@ const Login = () => {
                     <button type="submit">Login</button>
                   </div>
                 </form>
+                <div className="already-login">
+                  <p>
+                    <Link to="/register">To Become a meber Sign up</Link>
+                  </p>
+                </div>
               </div>
             </div>
 

@@ -191,15 +191,15 @@ const Hero = () => {
   }, [])
 
 
-// add by aman tiwari
+  // add by aman tiwari
 
   const addToCart = (product) => {
     if (!product) return;
-  
+
     const quantity = 1; // or get from state/input
-    const selectedWeight = "500g"; // or get from state/input
-    const price = product.price; // or calculate based on selectedWeight
-  
+    const selectedWeight = product.productInfo[0].productweight; // or get from state/input
+    const price = product.productInfo[0].productFinalPrice; // or calculate based on selectedWeight
+
     if (quantity < 1) {
       Swal.fire({
         icon: 'error',
@@ -208,10 +208,10 @@ const Hero = () => {
       });
       return;
     }
-  
+
     const existingCart = JSON.parse(sessionStorage.getItem("VesLakshna")) || [];
     const isProductInCart = existingCart.some((item) => item.productId === product._id);
-  
+
     if (isProductInCart) {
       Swal.fire({
         icon: 'warning',
@@ -237,7 +237,7 @@ const Hero = () => {
       navigate("/cart");
     }
   };
-  
+
 
   return (
     <>
@@ -431,13 +431,15 @@ const Hero = () => {
                         </option>
                       ))}
                     </select>
-                    <div className="" style={{display:'flex',justifyContent:'space-between' , gap:5}}>
-                    <button
+                    <div className="" style={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}>
+                      <button
                         onClick={() => addToCart(product)}
                         className="add-to-cart"
                       >
                         ADD TO CART
                       </button>
+                      
+                      {/* remove conflict  */}
                     <button
                  onClick={() => handleViewDetails(product._id)}
                        className="add-to-cart" >
