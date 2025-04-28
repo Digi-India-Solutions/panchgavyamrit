@@ -90,7 +90,7 @@ const Footer = () => {
         {/* Footer Bottom Section */}
         <div className="footer-bottom">
           <p>
-            &copy; 2024 Your Store. All Rights Reserved. | Designed & Powered by{" "}
+            &copy; 2024 Shri Surabhi Vedlakshna Panchgavyamrit Kendra. All Rights Reserved. | Designed & Powered by{" "}
             <a
               href="https://digiindiasolutions.com"
               target="_blank"

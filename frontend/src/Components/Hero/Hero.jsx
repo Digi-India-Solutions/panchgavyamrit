@@ -439,9 +439,8 @@ const Hero = () => {
                         ADD TO CART
                       </button>
                     <button
-                     onClick={() => addToCart(product)}
-                      className="add-to-cart"
-                    >
+                 onClick={() => handleViewDetails(product._id)}
+                       className="add-to-cart" >
                       View Details <i class="bi bi-chevron-double-right"></i>
                     </button>
                     </div>

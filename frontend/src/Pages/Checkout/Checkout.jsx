@@ -174,7 +174,8 @@ const Checkout = () => {
     event.preventDefault();
     Swal.fire({
       title: 'Confirm Your Order',
-      text: `For your pincode, the shipping charge is ₹${shipping}. Do you want to proceed with the order?`,
+      text: `Do you want to proceed with the order?`,
+      // For your pincode, the shipping charge is ₹${shipping}.
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes, Place Order',
@@ -416,7 +417,7 @@ const Checkout = () => {
                     placeholder="Coupon Code"
                   />{" "}
                   &nbsp;
-                  <button className="cupan-code-button" onClick={validateCouponCode}>Apply cupan</button>
+                  <button className="cupan-code-button" onClick={validateCouponCode}>Apply Coupon</button>
                 </div>
                 <div className="form-group">
                   <label htmlFor="payment-method">Payment Method</label>
